@@ -1,0 +1,51 @@
+{
+	"folders": {},
+	"connections": {
+		"mysql8-1877af15541-3dd7beb7b21e7bb": {
+			"provider": "mysql",
+			"driver": "mysql8",
+			"name": "practice",
+			"save-password": true,
+			"configuration": {
+				"host": "192.168.99.100",
+				"port": "3306",
+				"url": "jdbc:mysql://192.168.99.100:3306/",
+				"configurationType": "MANUAL",
+				"home": "mysql_client",
+				"type": "dev",
+				"properties": {
+					"connectTimeout": "20000",
+					"rewriteBatchedStatements": "true",
+					"enabledTLSProtocols": "TLSv1,TLSv1.1,TLSv1.2",
+					"allowPublicKeyRetrieval ": "TRUE"
+				},
+				"auth-model": "native",
+				"handlers": {}
+			}
+		}
+	},
+	"virtual-models": {
+		"mysql8-1877af15541-3dd7beb7b21e7bb": {
+			"practice": {
+				":admin_roles": {
+					"properties": {
+						"erd.diagram.state": {
+							"serialized": "\u003cdiagram version\u003d\"1\" name\u003d\"empty\" time\u003d\"202304131924\"\u003e\u003centities\u003e\u003cdata-source id\u003d\"mysql8-1877af15541-3dd7beb7b21e7bb\"\u003e\u003centity id\u003d\"1\" name\u003d\"admin_roles\" fq-name\u003d\"practice.admin_roles\" order\u003d\"0\" color-bg\u003d\"255,128,64\" x\u003d\"429\" y\u003d\"307\"\u003e\u003cpath name\u003d\"practice\"/\u003e\u003c/entity\u003e\u003centity id\u003d\"2\" name\u003d\"admin_users\" fq-name\u003d\"practice.admin_users\" order\u003d\"1\" x\u003d\"761\" y\u003d\"64\"\u003e\u003cpath name\u003d\"practice\"/\u003e\u003c/entity\u003e\u003centity id\u003d\"3\" name\u003d\"admin_permissions_role_links\" fq-name\u003d\"practice.admin_permissions_role_links\" order\u003d\"2\" x\u003d\"20\" y\u003d\"249\"\u003e\u003cpath name\u003d\"practice\"/\u003e\u003c/entity\u003e\u003centity id\u003d\"4\" name\u003d\"admin_users_roles_links\" fq-name\u003d\"practice.admin_users_roles_links\" order\u003d\"3\" border-width\u003d\"3\" x\u003d\"143\" y\u003d\"43\"\u003e\u003cpath name\u003d\"practice\"/\u003e\u003c/entity\u003e\u003c/data-source\u003e\u003c/entities\u003e\u003crelations\u003e\u003crelation name\u003d\"admin_permissions_role_links_inv_fk\" fq-name\u003d\"practice.admin_permissions_role_links.admin_permissions_role_links_inv_fk\" type\u003d\"fk\" pk-ref\u003d\"1\" fk-ref\u003d\"3\"/\u003e\u003crelation name\u003d\"admin_users_roles_links_inv_fk\" fq-name\u003d\"practice.admin_users_roles_links.admin_users_roles_links_inv_fk\" type\u003d\"fk\" pk-ref\u003d\"1\" fk-ref\u003d\"4\"/\u003e\u003crelation name\u003d\"admin_roles_created_by_id_fk\" fq-name\u003d\"practice.admin_roles.admin_roles_created_by_id_fk\" type\u003d\"fk\" pk-ref\u003d\"2\" fk-ref\u003d\"1\"/\u003e\u003crelation name\u003d\"admin_roles_updated_by_id_fk\" fq-name\u003d\"practice.admin_roles.admin_roles_updated_by_id_fk\" type\u003d\"fk\" pk-ref\u003d\"2\" fk-ref\u003d\"1\"/\u003e\u003crelation name\u003d\"admin_users_created_by_id_fk\" fq-name\u003d\"practice.admin_users.admin_users_created_by_id_fk\" type\u003d\"fk\" pk-ref\u003d\"2\" fk-ref\u003d\"2\"\u003e\u003cbend type\u003d\"rel\" x\u003d\"983\" y\u003d\"448\"/\u003e\u003cbend type\u003d\"rel\" x\u003d\"850\" y\u003d\"544\"/\u003e\u003c/relation\u003e\u003crelation name\u003d\"admin_users_updated_by_id_fk\" fq-name\u003d\"practice.admin_users.admin_users_updated_by_id_fk\" type\u003d\"fk\" pk-ref\u003d\"2\" fk-ref\u003d\"2\"\u003e\u003cbend type\u003d\"rel\" x\u003d\"983\" y\u003d\"448\"/\u003e\u003cbend type\u003d\"rel\" x\u003d\"850\" y\u003d\"544\"/\u003e\u003c/relation\u003e\u003crelation name\u003d\"admin_users_roles_links_fk\" fq-name\u003d\"practice.admin_users_roles_links.admin_users_roles_links_fk\" type\u003d\"fk\" pk-ref\u003d\"2\" fk-ref\u003d\"4\"/\u003e\u003c/relations\u003e\u003c/diagram\u003e"
+						}
+					}
+				}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Разработка",
+			"color": "255,255,255",
+			"description": "База данных для разработки",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
+}

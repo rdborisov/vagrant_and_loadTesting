@@ -1,0 +1,86 @@
+---
+- hosts: all
+  vars:
+    NODEJS_VERSION: "18"
+    ansible_distribution_release: "focal"
+  become: yes
+  tasks:
+    - name: Full system upgrade
+      become: yes
+      apt:
+        update_cache: yes
+        upgrade: yes
+    - name: Install CLI apps and libraries
+      apt:
+        name:
+          - build-essential
+          - software-properties-common
+          - git
+          - make
+          - htop
+          - iotop
+          - rsync
+        state: latest
+    - name: Install the gpg key for nodejs LTS
+      apt_key:
+        url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+        state: present
+    - name: Install the nodejs LTS repos
+      apt_repository:
+        repo: "deb https://deb.nodesource.com/node_{{ NODEJS_VERSION }}.x {{ ansible_distribution_release }} main"
+        state: present
+        update_cache: yes
+    - name: Install the nodejs
+      apt:
+        name: nodejs
+        state: latest
+    - name: Install the latest NPM
+      npm:
+        name: npm
+        global: yes
+        state: latest
+    - name: Install the latest Yarn
+      npm:
+        name: yarn
+        global: yes
+        state: latest
+    - name: Install Nginx
+      apt:
+        name:
+          - nginx
+        state: latest
+    - name: Reverse Proxy configuration
+      template:
+        src: ./config-templates/default.j2
+        dest: /etc/nginx/sites-available/default
+        owner: root
+        group: root
+        mode: '0644'
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: reloaded
+    - name: Install Gatsby
+      command: 
+        "npm install --global gatsby-cli"
+    - name: Install atop
+      apt:
+        name:
+          - atop
+        state: latest
+    - name: Set Atop settings
+      replace:
+        path: /usr/share/atop/atop.daily
+        regexp: "{{ item.regexp }}"
+        replace: "{{ item.replace }}"
+        backup: yes
+      loop:
+        - regexp: INTERVAL=\d+
+          replace: INTERVAL=1
+        - regexp: LOGGENERATIONS=\d+
+          replace: LOGGENERATIONS=2
+    - name: Restart Atop service
+      service:
+        name: atop
+        state: restarted
+

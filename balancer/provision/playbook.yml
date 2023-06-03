@@ -1,0 +1,41 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: Install Nginx
+    apt:
+      name:
+        - nginx
+      state: latest
+  - name: Load Balancer configuration
+    template:
+      src: ./config-templates/default.j2
+      dest: /etc/nginx/sites-available/default
+      owner: root
+      group: root
+      mode: '0644'
+  - name: Restart Nginx
+    service:
+      name: nginx
+      state: reloaded
+  - name: Install atop
+    apt:
+      name:
+        - atop
+      state: latest
+  - name: Set Atop settings
+    replace:
+      path: /usr/share/atop/atop.daily
+      regexp: "{{ item.regexp }}"
+      replace: "{{ item.replace }}"
+      backup: yes
+    loop:
+      - regexp: INTERVAL=\d+
+        replace: INTERVAL=1
+      - regexp: LOGGENERATIONS=\d+
+        replace: LOGGENERATIONS=2
+  - name: Restart Atop service
+    service:
+      name: atop
+      state: restarted
+
